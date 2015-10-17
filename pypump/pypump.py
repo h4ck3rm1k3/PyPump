@@ -347,6 +347,7 @@ class PyPump(object):
         kwargs["verify"] = self.verify_requests
 
         try:
+            print ("Check %s" % url)
             response = fnc(url, **kwargs)
             return response
         except requests.exceptions.ConnectionError:
@@ -378,6 +379,7 @@ class PyPump(object):
         self.store["oauth-request-token"] = self._server_tokens["token"]
         self.store["oauth-request-secret"] = self._server_tokens["token_secret"]
 
+        pprint.pprint({"going to requse user" : self.store})
         # now we need the user to authorize me to use their pump.io account
         result = self.verifier_callback(self.construct_oauth_url())
         if result is not None:

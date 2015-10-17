@@ -78,7 +78,7 @@ class PumpObject(object):
                 del self._mapping[i]
 
         # add any missing attributes
-        for key in self._mapping.keys():
+        for key in list(self._mapping.keys()):
             if not hasattr(self, key):
                 setattr(self, key, None)
 
@@ -133,9 +133,9 @@ class PumpObject(object):
 
     def __unicode__(self):
         if self.display_name is not None:
-            return u'{name}'.format(name=self.display_name)
+            return '{name}'.format(name=self.display_name)
         else:
-            return u'{type}'.format(type=self.object_type)
+            return '{type}'.format(type=self.object_type)
 
     if six.PY3:
         def __str__(self):
@@ -214,14 +214,14 @@ class Mapper(object):
         mapping = mapping or obj._mapping
 
         if "data" in kwargs:
-            for k, v in mapping.items():
+            for k, v in list(mapping.items()):
                 if kwargs["data"].get(v, None) is not None:
                     val = kwargs["data"][v]
                 else:
                     val = None
                 self.add_attr(obj, k, val, from_json=True)
         else:
-            for k, v in mapping.items():
+            for k, v in list(mapping.items()):
                 if k in kwargs:
                     self.add_attr(obj, k, kwargs[k])
 
